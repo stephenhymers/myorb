@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
@@ -7,6 +7,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as faker from 'faker';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogOverviewExampleDialogComponent} from './dialog-overview-example-dialog/dialog-overview-example-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface Patient {
   name: string;
@@ -18,23 +19,24 @@ export interface Patient {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent implements OnInit{
   displayedColumns: string[] = ['select', 'photo', 'name', 'dob', 'nhsNumber'];
   dataSource: MatTableDataSource<Patient>;
   selection = new SelectionModel<Patient>(true, []);
+  canAddPatient = true;
+  duration = 3000;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  animal: string;
-  name: string;
-
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
-    const patients = Array.from({length: 100}, () => createNewPatient());
+    const patients = Array.from({length: 100}, () => this.createNewPatient());
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(patients);
@@ -43,6 +45,17 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  createNewPatient(): Patient {
+    const context = faker.helpers.contextualCard();
+    const transaction = faker.helpers.createTransaction();
+    return {
+      name: context.name,
+      photo: context.avatar,
+      dob: context.dob,
+      nhsNumber: +transaction.account
+    };
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -86,10 +99,19 @@ export class AppComponent implements OnInit{
   }
 
   addSelection() {
-    console.log('click');
-    this.dataSource.data.push(createNewPatient());
+    this.canAddPatient = false;
+    this.dataSource.data.push(this.createNewPatient());
     this.dataSource._updateChangeSubscription();
     this.dataSource._updatePaginator(this.dataSource.data.length);
+    this.snackBar.open('New Patient Added', 'Close', {
+      duration: this.duration
+    }).afterDismissed().subscribe(() => {
+      this.canAddPatient = true;
+    });
+    // Had to do this because the snackbar dismissal subscription seems to be outside of the life cycle
+    setTimeout(() => {
+      this.canAddPatient = true;
+    }, this.duration);
   }
 
   openDialog(): void {
@@ -101,18 +123,10 @@ export class AppComponent implements OnInit{
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.removeSelection();
+        this.snackBar.open('Patients Deleted', 'Close', {
+          duration: this.duration
+        });
       }
     });
   }
-}
-
-function createNewPatient(): Patient {
-  const context = faker.helpers.contextualCard();
-  const transaction = faker.helpers.createTransaction();
-  return {
-    name: context.name,
-    photo: context.avatar,
-    dob: context.dob,
-    nhsNumber: +transaction.account
-  };
 }

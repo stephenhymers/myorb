@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <p>Are you sure you want to delete {{ data.patients.length }} rows?</p>
+  <p>Are you sure you want to delete {{ data.patients.length }} {{ data.patients.length > 1 ? 'patients' : 'patient'}}?</p>
   <ng-container *ngFor="let patient of data.patients">
     <p>
       {{ patient.name }} ({{ patient.nhsNumber }})
@@ -7,6 +7,6 @@
   </ng-container>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="true">Ok</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">Ok</button>
 </div>

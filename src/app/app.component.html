@@ -1,10 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>MyOrb Patients</span>
+    <span>Patients</span>
     <span class="example-spacer"></span>
-<!--    <mat-form-field>-->
-<!--      <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>-->
-<!--    </mat-form-field>-->
     <mat-form-field class="example-form-field" floatLabel="never">
       <input matInput type="text" placeholder="Search" (keyup)="applyFilter($event)">
     </mat-form-field>
@@ -12,7 +9,7 @@
 </mat-toolbar>
 
 <div class="left-fab-container">
-  <button mat-fab color="primary"  class="fab-toggler" (click)="addSelection()">
+  <button mat-fab color="primary"  class="fab-toggler" (click)="addSelection()" [disabled]="!canAddPatient">
     <mat-icon>add</mat-icon>
   </button>
 </div>
