@@ -1,0 +1,120 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-row {
+
+  .mat-cell {
+    padding: 8px;
+
+    &:first-of-type {
+      padding-left: 16px;
+    }
+
+    &:last-of-type {
+      padding-right: 16px;
+    }
+  }
+
+  &:last-of-type {
+    .mat-cell {
+      border-bottom: none;
+    }
+  }
+}
+
+.mat-header-cell {
+  padding: 8px;
+
+  &:first-of-type {
+    padding-left: 16px;
+  }
+
+  &:last-of-type {
+    padding-right: 16px;
+  }
+}
+
+.mat-footer-cell {
+  padding: 8px;
+
+  &:first-of-type {
+    padding-left: 8px;
+  }
+
+  &:last-of-type {
+    padding-right: 16px;
+  }
+}
+
+.left-fab-container {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  > div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 5px;
+
+    button {
+      margin-bottom: 17px;
+    }
+  }
+}
+
+.right-fab-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  > div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 5px;
+
+    button {
+      margin-bottom: 17px;
+    }
+  }
+}
+
+.fab-toggler {
+  float: right;
+  z-index: 100;
+}
+
+.mat-paginator-sticky {
+  bottom: -1px;
+  position: sticky;
+  z-index: 10;
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+
+::ng-deep {
+
+  .mat-paginator {
+
+    .mat-paginator-container {
+      justify-content: space-between;
+    }
+
+    .mat-paginator-page-size {
+      display: inline-flex;
+    }
+
+    .mat-paginator-range-label {
+      margin: 0 8px 0 8px;
+    }
+  }
+}
