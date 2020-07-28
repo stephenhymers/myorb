@@ -51,7 +51,7 @@ export class AppComponent implements OnInit{
     const context = faker.helpers.contextualCard();
     const transaction = faker.helpers.createTransaction();
     return {
-      name: context.name,
+      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       photo: context.avatar,
       dob: context.dob,
       nhsNumber: +transaction.account

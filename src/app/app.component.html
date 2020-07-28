@@ -76,16 +76,20 @@
   </table>
 </div>
 
-<mat-toolbar color="basic" class="footer-toolbar">
+<div class="footer-toolbar">
+
   <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
-  <mat-toolbar-row>
-    <button mat-raised-button color="primary" (click)="addSelection()" [disabled]="!canAddPatient">
-      <mat-icon>add</mat-icon>
-    </button>
-    <span class="example-spacer"></span>
-    <button mat-raised-button color="warn" [disabled]="selection.isEmpty()" (click)="openDialog()">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
+
+  <mat-toolbar color="basic">
+    <mat-toolbar-row>
+      <button mat-raised-button color="primary" (click)="addSelection()" [disabled]="!canAddPatient">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span class="example-spacer"></span>
+      <button mat-raised-button color="warn" [disabled]="selection.isEmpty()" (click)="openDialog()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
 
