@@ -111,7 +111,7 @@ export class AppComponent implements OnInit{
     // Had to do this because the snackbar dismissal subscription seems to be outside of the life cycle
     setTimeout(() => {
       this.canAddPatient = true;
-    }, this.duration);
+    }, this.duration / 3);
   }
 
   openDialog(): void {
